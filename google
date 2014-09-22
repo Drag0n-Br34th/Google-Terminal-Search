@@ -1,0 +1,12 @@
+#!/bin/bash
+
+COUNTER="0"
+for param in "$@"; do
+	if [ $COUNTER -eq 0 ]; then
+		X="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$param")"
+	else
+		X="${X}+$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$param")"
+	fi
+	COUNTER=$[$COUNTER+1]
+done
+open http://www.google.ca/#q="${X}"
